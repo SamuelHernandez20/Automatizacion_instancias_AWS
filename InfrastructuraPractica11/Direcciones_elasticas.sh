@@ -48,8 +48,8 @@ ELASTIC_IP_NFS=$(aws ec2 allocate-address --query PublicIp --output text)
 
 # Asociamos la ip's elasticas a cada una de las instancias:
 
-aws ec2 associate-address --instance-id $INSTANCE_ID --public-ip $ELASTIC_IP_FRONTEND_1
-aws ec2 associate-address --instance-id $INSTANCE_ID --public-ip $ELASTIC_IP_FRONTEND_2
-aws ec2 associate-address --instance-id $INSTANCE_ID --public-ip $ELASTIC_IP_BACKEND
-aws ec2 associate-address --instance-id $INSTANCE_ID --public-ip $ELASTIC_IP_BALANCER
-aws ec2 associate-address --instance-id $INSTANCE_ID --public-ip $ELASTIC_IP_NFS
+aws ec2 associate-address --instance-id $INSTANCE_ID_FRONTEND_1 --public-ip $ELASTIC_IP_FRONTEND_1
+aws ec2 associate-address --instance-id $INSTANCE_ID_FRONTEND_2 --public-ip $ELASTIC_IP_FRONTEND_2
+aws ec2 associate-address --instance-id $INSTANCE_ID_BACKEND --public-ip $ELASTIC_IP_BACKEND
+aws ec2 associate-address --instance-id $INSTANCE_ID_BALANCER --public-ip $ELASTIC_IP_BALANCER
+aws ec2 associate-address --instance-id $INSTANCE_ID_NFS --public-ip $ELASTIC_IP_NFS
