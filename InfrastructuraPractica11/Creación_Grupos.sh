@@ -7,11 +7,40 @@ export AWS_PAGER=""
 # Variables de configuración
 source .env
 
-# 1. Creamos el grupo de seguridad: FRONTEnD
+# 1. Creamos el grupo de seguridad: LOAD_BALANCER
+
+aws ec2 create-security-group \
+    --group-name "LOADBALANCER-sg" \
+    --description "Reglas para el Balanceador"
+
+# Creamos una regla de accesso SSH
+aws ec2 authorize-security-group-ingress \
+    --group-name "LOADBALANCER-sg" \
+    --protocol tcp \
+    --port 22 \
+    --cidr 0.0.0.0/0
+
+# Creamos una regla de accesso HTTP
+aws ec2 authorize-security-group-ingress \
+    --group-name "LOADBALANCER-sg" \
+    --protocol tcp \
+    --port 80 \
+    --cidr 0.0.0.0/0
+
+# Creamos una regla de accesso HTTPS
+aws ec2 authorize-security-group-ingress \
+    --group-name "LOADBALANCER-sg" \
+    --protocol tcp \
+    --port 443 \
+    --cidr 0.0.0.0/0
+
+#---------------------------------------------------------------------
+
+# 2. Creamos el grupo de seguridad: FRONTEND
 
 aws ec2 create-security-group \
     --group-name "FRONTEND-sg" \
-    --description "Reglas para el FRONTEND"
+    --description "Reglas para el Frontend"
 
 # Creamos una regla de accesso SSH
 aws ec2 authorize-security-group-ingress \
@@ -27,16 +56,7 @@ aws ec2 authorize-security-group-ingress \
     --port 80 \
     --cidr 0.0.0.0/0
 
-# Creamos una regla de accesso HTTPS
-aws ec2 authorize-security-group-ingress \
-    --group-name "FRONTEND-sg" \
-    --protocol tcp \
-    --port 443 \
-    --cidr 0.0.0.0/0
-
-#---------------------------------------------------------------------
-
-# 2. Creamos el grupo de seguridad: NFS-sg
+# 3. Creamos el grupo de seguridad: NFS-sg
 
 aws ec2 create-security-group \
  --group-name "NFS-sg" \
@@ -58,7 +78,7 @@ aws ec2 authorize-security-group-ingress \
 
 #---------------------------------------------------------------------
 
-# 3. Creamos el grupo de seguridad: BACKEND-sg
+# 4. Creamos el grupo de seguridad: BACKEND-sg
 aws ec2 create-security-group \
     --group-name "BACKEND-sg" \
     --description "Reglas para el backend"
@@ -77,30 +97,3 @@ aws ec2 authorize-security-group-ingress \
     --port 3306 \
     --cidr 0.0.0.0/0
 
-#---------------------------------------------------------------------
-# 4. Creamos el grupo de seguridad: LOAD-BALANCER-sg
-
-aws ec2 create-security-group \
-    --group-name "LOAD_BALANCER-sg" \
-    --description "Reglas para el LOAD-BALANCER"
-
-# Creamos una regla de accesso SSH
-aws ec2 authorize-security-group-ingress \
-    --group-name "LOAD_BALANCER-sg" \
-    --protocol tcp \
-    --port 22 \
-    --cidr 0.0.0.0/0
-
-# Creamos una regla de accesso HTTP
-aws ec2 authorize-security-group-ingress \
-    --group-name "LOAD_BALANCER-sg" \
-    --protocol tcp \
-    --port 80 \
-    --cidr 0.0.0.0/0
-
-# Creamos una regla de accesso HTTPS
-aws ec2 authorize-security-group-ingress \
-    --group-name "LOAD_BALANCER-sg" \
-    --protocol tcp \
-    --port 443 \
-    --cidr 0.0.0.0/0
