@@ -8,8 +8,8 @@ A continuación muestro la estructura de los scripts de automatización:
 ```
     ├── InfraestructuraPráctica11
     │   ├── .env
-    │   ├── 01-delete_all_security_groups.sh
-    │   ├── 02-delete_all_elastic_ips.sh
-    │   ├── 03-create_security_groups.sh
+    │   ├── Creacion_instancias.sh
+    │   ├── Creación_Grupos.sh
+    │   ├── Direcciones_elasticas.sh
 
 ```
