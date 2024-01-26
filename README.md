@@ -15,3 +15,6 @@ A continuación muestro la estructura de los scripts de automatización:
     │   ├── Direcciones_elasticas.sh
 
 ```
+ ## 1. Creación de los grupos de seguridad:
+
+ 
