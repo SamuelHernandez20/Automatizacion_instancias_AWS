@@ -5,6 +5,8 @@ Para ello estaremos haciendo uso de la utilidad **aws-cli**.
 
 A continuación muestro la estructura de los scripts de automatización:
 
+ # Estructura de Directorios:
+
 ```
     ├── InfraestructuraPráctica11
     │   ├── .env
