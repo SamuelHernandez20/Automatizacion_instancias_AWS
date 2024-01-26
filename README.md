@@ -6,7 +6,7 @@ Para ello estaremos haciendo uso de la utilidad **aws-cli**.
 A continuación muestro la estructura de los scripts de automatización:
 
 ```
-    ├── Infraestructurapráctica11
+    ├── InfraestructuraPráctica11
     │   ├── .env
     │   ├── 01-delete_all_security_groups.sh
     │   ├── 02-delete_all_elastic_ips.sh
