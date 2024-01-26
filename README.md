@@ -126,6 +126,7 @@ aws ec2 authorize-security-group-ingress \
     --cidr 0.0.0.0/0
 ```
 Creamos una regla de accesso para **MySQL**:
+
 ```
 aws ec2 authorize-security-group-ingress \
     --group-name "BACKEND-sg" \
@@ -133,5 +134,14 @@ aws ec2 authorize-security-group-ingress \
     --port 3306 \
     --cidr 0.0.0.0/0
 ```
+ ## 2. Creación de las instancias:
 
+ A continuación la creación automatizada de las instancias que voy a proceder a crear son las siguientes:
+```
+- Balanceador.
+- Frontal Web 1.
+- Frontal Web 2.
+- Servidor NFS.
+- Servidor de Base de Datos MySQL.
+```
  
