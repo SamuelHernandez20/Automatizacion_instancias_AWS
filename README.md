@@ -209,8 +209,64 @@ aws ec2 run-instances \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$INSTANCE_NAME_LOAD_BALANCER}]" 
 ```
 
+ ## 3. Creación de las direcciones ip elásticas:
 
+Obtenemos el **ID** de las instancias a partir de su nombre:
 
+```
+INSTANCE_ID_FRONTEND_1=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=$INSTANCE_NAME_FRONTEND_1" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text)
+```
+
+```
+INSTANCE_ID_FRONTEND_2=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=$INSTANCE_NAME_FRONTEND_2" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text)
+```
+
+```
+INSTANCE_ID_BACKEND=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=$INSTANCE_NAME_BACKEND" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text)
+```
+
+```
+INSTANCE_ID_BACKEND=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=$INSTANCE_NAME_LOAD_BALANCER" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text)
+```
+
+```
+INSTANCE_ID_NFS=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=$INSTANCE_NAME_LOAD_BALANCER" \
+                      "Name=instance-state-name,Values=running" \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text)
+```
+
+# Creamos las direcciones IP elásticas:
+ELASTIC_IP_FRONTEND_1=$(aws ec2 allocate-address --query PublicIp --output text)
+ELASTIC_IP_FRONTEND_2=$(aws ec2 allocate-address --query PublicIp --output text)
+ELASTIC_IP_BACKEND=$(aws ec2 allocate-address --query PublicIp --output text)
+ELASTIC_IP_BALANCER=$(aws ec2 allocate-address --query PublicIp --output text)
+ELASTIC_IP_NFS=$(aws ec2 allocate-address --query PublicIp --output text)
+
+# Asociamos la ip's elasticas a cada una de las instancias:
+
+aws ec2 associate-address --instance-id $INSTANCE_ID_FRONTEND_1 --public-ip $ELASTIC_IP_FRONTEND_1
+aws ec2 associate-address --instance-id $INSTANCE_ID_FRONTEND_2 --public-ip $ELASTIC_IP_FRONTEND_2
+aws ec2 associate-address --instance-id $INSTANCE_ID_BACKEND --public-ip $ELASTIC_IP_BACKEND
+aws ec2 associate-address --instance-id $INSTANCE_ID_BALANCER --public-ip $ELASTIC_IP_BALANCER
+aws ec2 associate-address --instance-id $INSTANCE_ID_NFS --public-ip $ELASTIC_IP_NFS
 
 
 
